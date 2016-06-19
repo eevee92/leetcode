@@ -1,5 +1,4 @@
-// leetcode101
-
+// leetcode 101
 /**
  * Definition for a binary tree node.
  * public class TreeNode {
@@ -10,25 +9,35 @@
  * }
  */
 public class Solution {
-    public boolean isSymmetric(TreeNode root) {
+    public boolean isBalanced(TreeNode root) {
         if(root == null)
             return true;
-        if(root.left == null && root.right == null)
+        boolean[] ans = new boolean[1];
+        ans[0] = true;
+        helper(root, ans);
+        if(ans[0]==true)
             return true;
-        return helper(root.left, root.right);
-    }
-    
-    private boolean helper(TreeNode left, TreeNode right)
-    {
-        if(left==null && right==null)
-            return true;
-        if( ((left == null) && (right != null)) || 
-            ((left != null) && (right == null)) ||
-            ( left.val != right.val )           ||
-            !(helper(left.left, right.right))   ||
-            !(helper(left.right, right.left))   )
+        else
             return false;
-        return true;
+        
     }
     
+    int helper(TreeNode root, boolean[] ans)
+    {
+        if(root==null)
+            return 0;
+            
+        int leftHeight = 0;
+        int rightHeight = 0;
+        
+        if(root.left != null)
+            leftHeight = helper(root.left, ans);
+            
+        if(root.right != null)
+            rightHeight = helper(root.right, ans);
+            
+        if((leftHeight - rightHeight > 1) || (rightHeight - leftHeight > 1))
+            ans[0] = false;
+        return (leftHeight > rightHeight) ? (leftHeight+1) : (rightHeight+1);
+    }
 }
