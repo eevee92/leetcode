@@ -46,3 +46,16 @@ public class Solution {
         return ans;
     }
 }
+
+/*另一种写法：*/
+/*
+for( TreeNode left : buildTrees(start,k-1))
+{
+	for(TreeNode right : buildTrees(k+1, end))
+	{
+		TreeNode root = new TreeNode(k);
+		root.left = left;
+		root.right = right;
+	}
+}
+*/
